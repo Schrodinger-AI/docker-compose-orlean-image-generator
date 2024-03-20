@@ -29,7 +29,8 @@ services:
         source: ./webapi-appsettings.json
         target: /App/appsettings.json
       - ./webapi-logs/:/App/logs/
-    depends_on: silo
+    depends_on: 
+      - silo
 
   watermark:
     image: dogforever442/watermark-generator
