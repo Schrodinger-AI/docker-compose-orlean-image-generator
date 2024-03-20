@@ -17,17 +17,23 @@ services:
   silo:
     image: dogforever442/orlean-image-generator-silohost
     volumes:
-      - ./silo-appsettings.json:/App/appsettings.json
+      - type: bind
+        source: ./silo-appsettings.json
+        target: /App/appsettings.json
 
   webapiclient:
     image: dogforever442/orlean-image-generator-webapiclient
     volumes:
-      - ./webapi-appsettings.json:/App/appsettings.json
+      - type: bind
+        source: ./webapi-appsettings.json
+        target: /App/appsettings.json
 
   watermark:
     image: dogforever442/watermark-generator
     volumes:
-      - ./watermark-appsettings.json:/app/appsettings.json
+      - type: bind
+        source: ./watermark-appsettings.json
+        target: /App/appsettings.json
 
   nginx:
     image: nginx
