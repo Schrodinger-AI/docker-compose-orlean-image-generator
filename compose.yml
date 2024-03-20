@@ -3,16 +3,16 @@ version: "3.7"
 
 name: orlean-image-generator
 services:
-  mysql:
-    image: mysql:8.0
-    cap_add:
-      - SYS_NICE
-    restart: always
-    environment:
-      - MYSQL_DATABASE=orleans_image_generator
-      - MYSQL_ROOT_PASSWORD=password
-    volumes:
-      - ./db:/var/lib/mysql
+  # mysql:
+  #   image: mysql:8.0
+  #   cap_add:
+  #     - SYS_NICE
+  #   restart: always
+  #   environment:
+  #     - MYSQL_DATABASE=orleans_image_generator
+  #     - MYSQL_ROOT_PASSWORD=password
+  #   volumes:
+  #     - ./db:/var/lib/mysql
 
   silo:
     image: dogforever442/orlean-image-generator-silohost
@@ -20,6 +20,7 @@ services:
       - type: bind
         source: ./silo-appsettings.json
         target: /App/appsettings.json
+      - ./silo-logs/:/App/logs/
 
   webapiclient:
     image: dogforever442/orlean-image-generator-webapiclient
@@ -27,6 +28,7 @@ services:
       - type: bind
         source: ./webapi-appsettings.json
         target: /App/appsettings.json
+      - ./webapi-logs/:/App/logs/
 
   watermark:
     image: dogforever442/watermark-generator
@@ -34,6 +36,7 @@ services:
       - type: bind
         source: ./watermark-appsettings.json
         target: /App/appsettings.json
+      - ./watermark-logs/:/app/logs/
 
   nginx:
     image: nginx
