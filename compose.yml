@@ -1,7 +1,18 @@
 # compose.yaml
 version: "3.7"
 
+name: orlean-image-generator
 services:
+  mysql:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=orleans_image_generator
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./db:/var/lib/mysql
 
   silo:
     image: dogforever442/orlean-image-generator-silohost
