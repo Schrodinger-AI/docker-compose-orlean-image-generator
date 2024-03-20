@@ -1,0 +1,27 @@
+# compose.yaml
+version: "3.7"
+
+services:
+
+  silo:
+    image: dogforever442/orlean-image-generator-silohost
+    volumes:
+      - ./silo-appsettings.json:/App/appsettings.json
+
+  webapiclient:
+    image: dogforever442/orlean-image-generator-webapiclient
+    volumes:
+      - ./webapi-appsettings.json:/App/appsettings.json
+
+  watermark:
+    image: dogforever442/watermark-generator
+    volumes:
+      - ./watermark-appsettings.json:/app/appsettings.json
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+      
