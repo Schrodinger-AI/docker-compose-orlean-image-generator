@@ -1,0 +1,18 @@
+{
+  "SiloPort": 11111,
+  "GatewayPort": 30000,
+  "ConnectionString": "mongodb://root:password@mongo:27017/orleans_image_generator?authSource=admin",
+  "ImageSettings": {
+    "Width": 512,
+    "Height": 512,
+    "Quality": 100
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "MongoDataBase": "orleans_image_generator"
+}

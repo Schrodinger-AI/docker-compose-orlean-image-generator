@@ -1,0 +1,11 @@
+{
+  "ConnectionString": "mongodb://root:password@mongo:27017/orleans_image_generator?authSource=admin",
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "MongoDataBase": "orleans_image_generator"
+}

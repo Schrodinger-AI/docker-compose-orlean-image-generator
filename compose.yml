@@ -1,49 +1,36 @@
-# compose.yaml
-version: "3.7"
-
-name: orlean-image-generator
 services:
-  # mysql:
-  #   image: mysql:8.0
-  #   cap_add:
-  #     - SYS_NICE
-  #   restart: always
-  #   environment:
-  #     - MYSQL_DATABASE=orleans_image_generator
-  #     - MYSQL_ROOT_PASSWORD=password
-  #   volumes:
-  #     - ./db:/var/lib/mysql
-
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./config/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_USER=root
+      - MONGO_PASSWORD=password
+    command: ["--bind_ip", "0.0.0.0"]
   silo:
-    image: dogforever442/orlean-image-generator-silohost
+    image: schrodingernft/orlean-image-generator-silohost
+    restart: always
     volumes:
-      - type: bind
-        source: ./silo-appsettings.json
-        target: /App/appsettings.json
-      - ./silo-logs/:/App/logs/
-
+      - ./config/silo-appsettings.json/:/App/appsettings.json
   webapiclient:
-    image: dogforever442/orlean-image-generator-webapiclient
+    image: schrodingernft/orlean-image-generator-webapiclient
+    restart: always
     volumes:
-      - type: bind
-        source: ./webapi-appsettings.json
-        target: /App/appsettings.json
-      - ./webapi-logs/:/App/logs/
-    depends_on: 
-      - silo
-
+      - ./config/webapi-appsettings.json/:/App/appsettings.json
+    environment:
+      - ASPNETCORE_URLS=http://*:5000
   watermark:
-    image: dogforever442/watermark-generator
-    volumes:
-      - type: bind
-        source: ./watermark-appsettings.json
-        target: /App/appsettings.json
-      - ./watermark-logs/:/app/logs/
-
+    image: schrodingernft/watermark-generator
+    restart: always
+    environment:
+      - ASPNETCORE_URLS=http://*:5050
   nginx:
     image: nginx
-    volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+    restart: always
     ports:
-      - 80:80
-      
+      - '8080:80'
+    volumes:
+      - ./config/default.conf:/etc/nginx/conf.d/default.conf
