@@ -14,12 +14,12 @@ services:
     image: schrodingernft/orlean-image-generator-silohost
     restart: always
     volumes:
-      - ./config/silo-appsettings.json/:/App/appsettings.json
+      - ./config/silo-appsettings.json:/App/appsettings.json
   webapiclient:
     image: schrodingernft/orlean-image-generator-webapiclient
     restart: always
     volumes:
-      - ./config/webapi-appsettings.json/:/App/appsettings.json
+      - ./config/webapi-appsettings.json:/App/appsettings.json
     environment:
       - ASPNETCORE_URLS=http://*:5000
   watermark:
